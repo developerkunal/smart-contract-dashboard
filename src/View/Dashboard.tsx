@@ -1,8 +1,14 @@
 import React from 'react';
+import Header from '../Controller/Header'
+import DataCard from '../Controller/DataCard'
+import WithdrawRoyality from '../Controller/WithdrawRoyality'
 
 function Dashboard() {
-  return (
-   <h1>Dashboard here</h1>
+  return (<>
+    <Header />
+    <DataCard />
+    <WithdrawRoyality />
+  </>
   );
 }
 
