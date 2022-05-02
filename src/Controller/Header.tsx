@@ -1,13 +1,26 @@
 import React from 'react';
 import { Navbar, Container, Nav } from 'react-bootstrap';
 import { Link } from 'react-router-dom';
+import { useWeb3React } from '@web3-react/core';
+import {useNavigate } from 'react-router-dom';
+
 function Header() {
+    const {deactivate} = useWeb3React()
+    const navigate=useNavigate()
+
+    const handleDisconnect = async() =>{
+        await deactivate()
+        localStorage.removeItem('provider')
+        navigate('/login')
+      }
+    
     return (
+
         <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
             <Container>
 
 
-                <Link className='navbar-brand' to="/">
+                <Link className='navbar-brand' to="/dashboard">
                     Smart Contract Dashboard
                 </Link>
 
@@ -29,7 +42,7 @@ function Header() {
 
                     </Nav>
                     <Nav>
-                        <Nav.Link eventKey={2} href="#">
+                        <Nav.Link eventKey={2} onClick={handleDisconnect}>
                             Logout
                         </Nav.Link>
                     </Nav>

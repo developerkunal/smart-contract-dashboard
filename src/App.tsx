@@ -3,22 +3,42 @@ import Dashboard from './View/Dashboard';
 import Login from './View/Login';
 import Verify from './View/Verify';
 import Update from './View/Update';
+import { Web3ReactProvider } from '@web3-react/core';
 import {
   BrowserRouter as Router,
   Routes,
   Route
 } from "react-router-dom";
+import { getLibrary } from './utils/LibraryUtil';
+import PrivateRoutes from './utils/PrivateRoutes';
+import PublicRoutes from './utils/PublicRoutes';
+
 function App() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<Dashboard />}/>
-        <Route path="/login" element={<Login />} />
-          <Route path="/update" element={<Update />} />
-          <Route path="/verify" element={<Verify />} />
-      </Routes>
-    </Router>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<PrivateRoutes />}>
 
+            <Route
+              path="/dashboard"
+              element={<Dashboard />} />
+            <Route
+              path="/update"
+              element={<Update />} />
+            <Route
+              path="/verify"
+              element={<Verify />} />
+          </Route>
+          <Route path="login" element={<PublicRoutes />}>
+          <Route
+            path="/login"
+            element={<Login />} />
+        </Route>
+        </Routes>
+       
+      </Router>
+    </Web3ReactProvider>
   );
 }
 

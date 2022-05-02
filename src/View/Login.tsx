@@ -1,6 +1,11 @@
 import React from 'react';
 import { Form, Button, Container, Row, Col } from 'react-bootstrap';
-function Login() {
+import LoginModal from '../Controller/LoginModal';
+
+
+const  Login: React.FC = () => {
+  const [modalShow, setModalShow] = React.useState(false);
+
   return (
     <Container>
 
@@ -14,9 +19,13 @@ function Login() {
               Sign In
             </h3>
             <div className="mb-3" >
-              <Button >
+              <Button  onClick={() => setModalShow(true)}>
                 Login
               </Button>
+              <LoginModal
+          show={modalShow}
+          onHide={() => setModalShow(false)}
+        />
             </div>
           </Col>
         </Row>
