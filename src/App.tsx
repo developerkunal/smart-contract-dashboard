@@ -31,12 +31,12 @@ function App() {
               element={<Verify />} />
           </Route>
           <Route path="login" element={<PublicRoutes />}>
-          <Route
-            path="/login"
-            element={<Login />} />
-        </Route>
+            <Route
+              path="/login"
+              element={<Login />} />
+          </Route>
         </Routes>
-       
+
       </Router>
     </Web3ReactProvider>
   );

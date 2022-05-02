@@ -13,5 +13,5 @@ const walletlink = new WalletLinkConnector({
 export const connectors = {
   injected: injected,
   coinbaseWallet: walletlink,
-  cachedProvider: injected || walletlink 
+  cachedProvider: injected || walletlink
 };
