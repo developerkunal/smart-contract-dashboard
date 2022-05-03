@@ -3,6 +3,8 @@ import Dashboard from './View/Dashboard';
 import Login from './View/Login';
 import Verify from './View/Verify';
 import Update from './View/Update';
+import Addresses from './View/Addresses';
+
 import { Web3ReactProvider } from '@web3-react/core';
 import {
   BrowserRouter as Router,
@@ -29,6 +31,9 @@ function App() {
             <Route
               path="/verify"
               element={<Verify />} />
+              <Route
+              path="/viewaddresses"
+              element={<Addresses />} />
           </Route>
           <Route path="login" element={<PublicRoutes />}>
             <Route
