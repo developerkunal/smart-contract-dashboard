@@ -38,7 +38,10 @@ function Header() {
                         <Link className='nav-link' to="/verify">
                             Verify whitelist
                         </Link>
-
+                        
+                        <Link className='nav-link' to="/viewaddresses">
+                            View Addresses
+                        </Link>
 
                     </Nav>
                     <Nav>

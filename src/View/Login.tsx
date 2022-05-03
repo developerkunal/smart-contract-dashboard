@@ -3,7 +3,7 @@ import { Form, Button, Container, Row, Col } from 'react-bootstrap';
 import LoginModal from '../Controller/LoginModal';
 
 
-const  Login: React.FC = () => {
+const Login: React.FC = () => {
   const [modalShow, setModalShow] = React.useState(false);
 
   return (
@@ -19,13 +19,13 @@ const  Login: React.FC = () => {
               Sign In
             </h3>
             <div className="mb-3" >
-              <Button  onClick={() => setModalShow(true)}>
+              <Button onClick={() => setModalShow(true)}>
                 Login
               </Button>
               <LoginModal
-          show={modalShow}
-          onHide={() => setModalShow(false)}
-        />
+                show={modalShow}
+                onHide={() => setModalShow(false)}
+              />
             </div>
           </Col>
         </Row>
