@@ -106,7 +106,6 @@ export const setWhitelists = async (address: any, library: any) => {
         contractAbi,
         library.getSigner()
     );
-console.log(rootHashes)
     const response = await contract
         .setWhitelistMerkleRoots([...rootHashes], {
             from: address,
