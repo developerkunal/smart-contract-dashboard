@@ -1,8 +1,7 @@
 import contractAbi from "../assets/ABI/ContractAbi.json"
 import { ethers } from "ethers";
-const tier1: any[] = Array.from('../../server/public/tier1.json')
-const tier2: any[] = Array.from('../../server/public/tier2.json')
-const tier3: any[] = Array.from('../../server/public/tier3.json')
+import axios from "axios";
+
 
 const { MerkleTree } = require("merkletreejs");
 const keccak256 = require("keccak256");
@@ -12,11 +11,26 @@ export const provider = new ethers
 
 const contractaddress = process.env.REACT_APP_CONTRACT_ADDRESS || '';
 
+let rootHashes: any[] = [];
+let tierTree: any[] = [];
 
+async function updateData () {
+    let tier1:any[]= []
+    let tier2:any[]= []
+    let tier3:any[]= []
+    await axios.get('http://localhost:8080/tier1.json').then((response)=>{
+        tier1.push(response.data)
+    })
+    await axios.get('http://localhost:8080/tier2.json').then((response)=>{
+        tier2.push(response.data)
+    })
+    await axios.get('http://localhost:8080/tier3.json').then((response)=>{
+        tier3.push(response.data)
+    })
 
-let whiteListAddressesComp = tier1;
-let whiteListAddressesDisc = tier2;
-let whiteListAddresses = tier3;
+    let whiteListAddressesComp = tier1;
+    let whiteListAddressesDisc = tier2;
+    let whiteListAddresses = tier3;
 
 let whiteList = [
     whiteListAddressesComp,
@@ -24,8 +38,7 @@ let whiteList = [
     whiteListAddresses,
 ];
 
-let rootHashes: any[] = [];
-let tierTree: any[] = [];
+
 whiteList.forEach((list) => {
     const leafNodes = list.map((addr) => keccak256(addr));
     const merkleTree = new MerkleTree(leafNodes, keccak256, { sortPairs: true });
@@ -33,7 +46,8 @@ whiteList.forEach((list) => {
     rootHashes.push(merkleTree.getRoot());
 
 });
-console.log(rootHashes)
+}
+updateData()
 export const Details = async (library: any) => {
     const contract = new ethers.Contract(
         contractaddress,
@@ -92,7 +106,7 @@ export const setWhitelists = async (address: any, library: any) => {
         contractAbi,
         library.getSigner()
     );
-
+console.log(rootHashes)
     const response = await contract
         .setWhitelistMerkleRoots([...rootHashes], {
             from: address,
