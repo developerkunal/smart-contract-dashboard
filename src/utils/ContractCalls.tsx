@@ -1,45 +1,18 @@
 import contractAbi from "../assets/ABI/ContractAbi.json"
 import { ethers } from "ethers";
-import axios from "axios";
+const tier1: any[] = Array.from('../../server/public/tier1.json')
+const tier2: any[] = Array.from('../../server/public/tier2.json')
+const tier3: any[] = Array.from('../../server/public/tier3.json')
+
 const { MerkleTree } = require("merkletreejs");
 const keccak256 = require("keccak256");
-
 export const provider = new ethers
     .providers
     .JsonRpcProvider(`https://${process.env.REACT_APP_CHAIN_NAME}.infura.io/v3/${process.env.REACT_APP_INFURA_KEY}`);
 
 const contractaddress = process.env.REACT_APP_CONTRACT_ADDRESS || '';
 
-let tier1: any[] = [];
-let tier2: any[] = [];
-let tier3: any[] = [];
-const update = async () => {
-    await axios.get('http://localhost:8080/tier1.json')
-        .then(async response => {
-            return await response.data
-        }).then(data => {
-            data.forEach((element: any[]) => {
-                tier1.push(element)
-            });
-        })
-    await axios.get('http://localhost:8080/tier2.json')
-        .then(async response => {
-            return await response.data
-        }).then(data => {
-            data.forEach((element: any[]) => {
-                tier2.push(element)
-            });
-        })
-    await axios.get('http://localhost:8080/tier3.json')
-        .then(async response => {
-            return await response.data
-        }).then(data => {
-            data.forEach((element: any[]) => {
-                tier3.push(element)
-            });
-        })
-}
-update()
+
 
 let whiteListAddressesComp = tier1;
 let whiteListAddressesDisc = tier2;
@@ -60,7 +33,7 @@ whiteList.forEach((list) => {
     rootHashes.push(merkleTree.getRoot());
 
 });
-
+console.log(rootHashes)
 export const Details = async (library: any) => {
     const contract = new ethers.Contract(
         contractaddress,
