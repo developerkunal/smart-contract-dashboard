@@ -11,7 +11,9 @@ const corsOptions = {
   optionSuccessStatus: 200,
 };
 app.use(cors(corsOptions));
-const result = [];
+let result = [];
+let result2 =[];
+let result3 = [];
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads/");
@@ -66,23 +68,23 @@ const createfile = async () => {
   fs.createReadStream("./uploads/tier2.csv")
     .pipe(csvParser())
     .on("data", (data) => {
-      result.push(data.tier1);
+      result2.push(data.tier2);
     })
     .on("end", () => {
       fs.writeFileSync(
         path.resolve(__dirname, "public/tier2.json"),
-        JSON.stringify(result)
+        JSON.stringify(result2)
       );
     });
   fs.createReadStream("./uploads/tier3.csv")
     .pipe(csvParser())
     .on("data", (data) => {
-      result.push(data.tier1);
+      result3.push(data.tier3);
     })
     .on("end", () => {
       fs.writeFileSync(
         path.resolve(__dirname, "public/tier3.json"),
-        JSON.stringify(result)
+        JSON.stringify(result3)
       );
     });
 };
