@@ -1,25 +1,49 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import Dashboard from './View/Dashboard';
+import Login from './View/Login';
+import Verify from './View/Verify';
+import Update from './View/Update';
+import Addresses from './View/Addresses';
+
+import { Web3ReactProvider } from '@web3-react/core';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route
+} from "react-router-dom";
+import { getLibrary } from './utils/LibraryUtil';
+import PrivateRoutes from './utils/PrivateRoutes';
+import PublicRoutes from './utils/PublicRoutes';
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <Web3ReactProvider getLibrary={getLibrary}>
+      <Router>
+        <Routes>
+          <Route path="/" element={<PrivateRoutes />}>
+
+            <Route
+              path="/dashboard"
+              element={<Dashboard />} />
+            <Route
+              path="/update"
+              element={<Update />} />
+            <Route
+              path="/verify"
+              element={<Verify />} />
+              <Route
+              path="/viewaddresses"
+              element={<Addresses />} />
+          </Route>
+          <Route path="login" element={<PublicRoutes />}>
+            <Route
+              path="/login"
+              element={<Login />} />
+          </Route>
+        </Routes>
+
+      </Router>
+    </Web3ReactProvider>
   );
 }
 
